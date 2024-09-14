@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">RedTop</string>
+    <string name="textTittle">Tittle</string>
+    <string name="textAuthor">Author</string>
+    <string name="textTimeStamp">5 hours ago</string>
+    <string name="commentsCount">0</string>
 </resources>
