@@ -5,16 +5,58 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.redtop.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import com.example.redtop.databinding.FragmentHomeBinding
+import com.example.redtop.presenter.home.HomeViewModel.ActionState
+import com.example.redtop.presenter.home.HomeViewModel.ActionState.None
+import com.example.redtop.presenter.home.HomeViewModel.ActionState.ShowMessage
 
 class HomeFragment : Fragment() {
 
+    //region Properties
+
+    private lateinit var binding: FragmentHomeBinding
+    private val viewModel by viewModels<HomeViewModel>()
+
+    //endregion
+
     //region LifeCycle
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initializeViewModel()
+    }
+
+    //endregion
+
+    //region Actions
+    private fun initializeViewModel() {
+        viewModel.actionState.observe(viewLifecycleOwner, this::onActionStateChanged)
+        viewModel.onUpdateViewState()
+    }
+
+    private fun onActionStateChanged(actionState: ActionState) {
+        when(actionState){
+            is None -> {
+                //Ignoring this case
+            }
+            ShowMessage -> {
+                showMessage("Message")
+            }
+        }
+    }
+
+    private fun showMessage(message: String) {
+        Toast.makeText(context,message, Toast.LENGTH_SHORT).show()
     }
     //endregion
+
 }

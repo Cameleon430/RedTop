@@ -7,6 +7,10 @@ android {
     namespace = "com.example.redtop"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.redtop"
         minSdk = 24
