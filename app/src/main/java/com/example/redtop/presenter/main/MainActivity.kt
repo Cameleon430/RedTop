@@ -9,10 +9,10 @@ import com.example.redtop.R
 import com.example.redtop.presenter.home.HomeFragment
 
 //region LifeCycle
+
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -22,4 +22,5 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 }
+
 //endregion
