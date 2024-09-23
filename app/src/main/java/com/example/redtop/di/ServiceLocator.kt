@@ -13,7 +13,6 @@ object ServiceLocator {
 
     fun initializeDatabase(context: Context){
         database = Room.databaseBuilder(context, RedTopDatabase::class.java, "red-top-database").build()
-        Log.d("APP_TAG", "initializeDatabase")
     }
 
     fun providePublicationRepository(): PublicationRepository{

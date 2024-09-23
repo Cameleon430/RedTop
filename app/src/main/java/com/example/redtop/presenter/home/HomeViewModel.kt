@@ -71,14 +71,57 @@ class HomeViewModel : ViewModel() {
         for (i in 0 until jsonArray.length()) {
             val publication = Publication(
                 id = i+1,
-                author = jsonArray.getJSONObject(i).getJSONObject("data").getString("subreddit_name_prefixed"),
-                title = jsonArray.getJSONObject(i).getJSONObject("data").getString("title"),
-                timeStamp = i,
-                image = jsonArray.getJSONObject(i).getJSONObject("data").getString("thumbnail"),
-                commentsCount = jsonArray.getJSONObject(i).getJSONObject("data").getString("num_comments")
+                author = jsonArray
+                    .getJSONObject(i)
+                    .getJSONObject("data")
+                    .getString("subreddit_name_prefixed"),
+                title = jsonArray
+                    .getJSONObject(i)
+                    .getJSONObject("data")
+                    .getString("title"),
+                timeStamp = getPublicationTimeDifference(
+                    jsonArray
+                        .getJSONObject(i)
+                        .getJSONObject("data")
+                        .getString("created")
+                        .toDouble()
+                        .toLong()
+                ),
+                media = listOf(jsonArray
+                    .getJSONObject(i)
+                    .getJSONObject("data")
+                    .getString("thumbnail")),
+                commentsCount = jsonArray
+                    .getJSONObject(i)
+                    .getJSONObject("data")
+                    .getString("num_comments")
             )
             publicationRepository.update(publication)
             invalidateViewItems()
+        }
+    }
+
+    private fun getPublicationTimeDifference(timeStamp:Long):String{
+        val currentTimeStamp:Long = System.currentTimeMillis()/1000
+        val differenceTimeStamp = currentTimeStamp.minus(timeStamp)
+
+        val differenceInMinutes = differenceTimeStamp / 60
+        val differenceInHours = differenceTimeStamp / 3600
+        val differenceInDays = differenceTimeStamp / 86400
+
+        return if(differenceInDays == 0L){
+            if (differenceInHours == 0L){
+                if(differenceInMinutes == 0L){
+                    "a few moment ago"
+                }
+                else{
+                    "$differenceInMinutes min. ago"
+                }
+            } else{
+                "$differenceInHours hr. ago"
+            }
+        } else{
+            "$differenceInDays days ago"
         }
     }
 
@@ -97,7 +140,7 @@ class HomeViewModel : ViewModel() {
             author = author,
             title = title,
             timeStamp = timeStamp,
-            image = image,
+            media = media,
             commentsCount = commentsCount
         )
     }

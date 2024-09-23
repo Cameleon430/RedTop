@@ -50,7 +50,7 @@ class RoomPublicationRepository(
             author = author,
             title = title,
             timeStamp = timeStamp,
-            image = image,
+            media = media.split(','),
             commentsCount = commentsCount
         )
     }
@@ -61,7 +61,7 @@ class RoomPublicationRepository(
             author = author,
             title = title,
             timeStamp = timeStamp,
-            image = image,
+            media = media.joinToString(","),
             commentsCount = commentsCount
         )
     }

@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:id="@+id/authorTextView"
         android:text="@string/textAuthor"
         android:maxLines="1"
@@ -16,7 +16,7 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:id="@+id/timeStampTextView"
         android:text="@string/textTimeStamp"
         android:maxLines="1"

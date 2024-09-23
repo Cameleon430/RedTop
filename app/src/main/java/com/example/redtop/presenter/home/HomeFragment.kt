@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
 
     //region Nested
     companion object {
-        const val URL: String = "https://www.reddit.com/top.json"
+        const val URL: String = "https://www.reddit.com/top.json?t=today&limit=100"
     }
     //endregion
 

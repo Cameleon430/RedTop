@@ -1,6 +1,7 @@
 package com.example.redtop.presenter.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -49,7 +50,7 @@ class HomeViewItemAdapter :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>(
                 authorTextView.text = item.author
                 titleTextView.text = item.title
                 timeStampTextView.text = item.timeStamp.toString()
-                Picasso.get().load(item.image).into(mediaImageView)
+                Picasso.get().load(item.media[0]).into(mediaImageView)
                 commentsCountImageView.text = item.commentsCount
             }
         }

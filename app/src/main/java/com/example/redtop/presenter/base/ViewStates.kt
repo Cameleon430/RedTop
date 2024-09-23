@@ -4,7 +4,7 @@ data class PublicationViewState(
     val id:Int,
     val author:String,
     val title: String,
-    val timeStamp: Int,
-    val image: String,
+    val timeStamp: String,
+    val media: List<String>,
     val commentsCount: String
 )
