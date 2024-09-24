@@ -69,35 +69,51 @@ class HomeViewModel : ViewModel() {
         val jsonArray: JSONArray = jsonObject.getJSONObject("data").getJSONArray("children")
 
         for (i in 0 until jsonArray.length()) {
-            val publication = Publication(
-                id = i+1,
-                author = jsonArray
-                    .getJSONObject(i)
-                    .getJSONObject("data")
-                    .getString("subreddit_name_prefixed"),
-                title = jsonArray
-                    .getJSONObject(i)
-                    .getJSONObject("data")
-                    .getString("title"),
-                timeStamp = getPublicationTimeDifference(
-                    jsonArray
+            if(validatePublications(jsonArray.getJSONObject(i))){
+                val publication = Publication(
+                    id = i+1,
+                    author = jsonArray
                         .getJSONObject(i)
                         .getJSONObject("data")
-                        .getString("created")
-                        .toDouble()
-                        .toLong()
-                ),
-                media = listOf(jsonArray
-                    .getJSONObject(i)
-                    .getJSONObject("data")
-                    .getString("thumbnail")),
-                commentsCount = jsonArray
-                    .getJSONObject(i)
-                    .getJSONObject("data")
-                    .getString("num_comments")
-            )
+                        .getString("subreddit_name_prefixed"),
+                    title = jsonArray
+                        .getJSONObject(i)
+                        .getJSONObject("data")
+                        .getString("title"),
+                    selftext = jsonArray
+                        .getJSONObject(i)
+                        .getJSONObject("data")
+                        .getString("selftext"),
+                    timeStamp = getPublicationTimeDifference(
+                        jsonArray
+                            .getJSONObject(i)
+                            .getJSONObject("data")
+                            .getString("created")
+                            .toDouble()
+                            .toLong()
+                    ),
+                    media = jsonArray
+                        .getJSONObject(i)
+                        .getJSONObject("data")
+                        .getString("url"),
+                    commentsCount = jsonArray
+                        .getJSONObject(i)
+                        .getJSONObject("data")
+                        .getString("num_comments")
+                )
             publicationRepository.update(publication)
             invalidateViewItems()
+            }
+        }
+    }
+
+    private fun validatePublications(jsonObject:JSONObject):Boolean{
+        try {
+            return jsonObject.getJSONObject("data").getString("is_gallery") != "true"
+        }
+        catch (e: Exception){
+            Log.d("TAG_", e.toString())
+            return jsonObject.getJSONObject("data").getString("is_video") != "true"
         }
     }
 
@@ -139,6 +155,7 @@ class HomeViewModel : ViewModel() {
             id = id,
             author = author,
             title = title,
+            selftext = selftext,
             timeStamp = timeStamp,
             media = media,
             commentsCount = commentsCount

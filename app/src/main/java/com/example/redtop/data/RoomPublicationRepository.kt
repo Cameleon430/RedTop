@@ -49,8 +49,9 @@ class RoomPublicationRepository(
             id = id,
             author = author,
             title = title,
+            selftext = selftext,
             timeStamp = timeStamp,
-            media = media.split(','),
+            media = media,
             commentsCount = commentsCount
         )
     }
@@ -60,8 +61,9 @@ class RoomPublicationRepository(
             id = id,
             author = author,
             title = title,
+            selftext = selftext,
             timeStamp = timeStamp,
-            media = media.joinToString(","),
+            media = media,
             commentsCount = commentsCount
         )
     }
