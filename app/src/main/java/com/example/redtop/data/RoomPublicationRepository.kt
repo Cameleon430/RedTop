@@ -49,7 +49,6 @@ class RoomPublicationRepository(
             id = id,
             author = author,
             title = title,
-            selftext = selftext,
             timeStamp = timeStamp,
             media = media,
             commentsCount = commentsCount
@@ -61,7 +60,6 @@ class RoomPublicationRepository(
             id = id,
             author = author,
             title = title,
-            selftext = selftext,
             timeStamp = timeStamp,
             media = media,
             commentsCount = commentsCount

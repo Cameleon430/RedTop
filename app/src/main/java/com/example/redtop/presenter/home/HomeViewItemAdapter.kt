@@ -2,7 +2,6 @@ package com.example.redtop.presenter.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.redtop.databinding.ItemPublicationBinding
@@ -49,10 +48,6 @@ class HomeViewItemAdapter :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>(
             with(binding) {
                 authorTextView.text = item.author
                 titleTextView.text = item.title
-                if(item.selftext.isNotBlank()){
-                    selftextTextView.text = item.selftext
-                    selftextTextView.visibility = View.VISIBLE
-                }
                 timeStampTextView.text = "\u2022 ${item.timeStamp}"
                 Picasso.get().load(item.media).into(mediaImageView)
                 commentsCountImageView.text = item.commentsCount

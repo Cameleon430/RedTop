@@ -80,10 +80,6 @@ class HomeViewModel : ViewModel() {
                         .getJSONObject(i)
                         .getJSONObject("data")
                         .getString("title"),
-                    selftext = jsonArray
-                        .getJSONObject(i)
-                        .getJSONObject("data")
-                        .getString("selftext"),
                     timeStamp = getPublicationTimeDifference(
                         jsonArray
                             .getJSONObject(i)
@@ -108,13 +104,10 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun validatePublications(jsonObject:JSONObject):Boolean{
-        try {
-            return jsonObject.getJSONObject("data").getString("is_gallery") != "true"
-        }
-        catch (e: Exception){
-            Log.d("TAG_", e.toString())
-            return jsonObject.getJSONObject("data").getString("is_video") != "true"
-        }
+        return (".png" in jsonObject.getJSONObject("data").getString("url") ||
+                ".jpeg" in jsonObject.getJSONObject("data").getString("url") ||
+                ".jpg" in jsonObject.getJSONObject("data").getString("url"))
+
     }
 
     private fun getPublicationTimeDifference(timeStamp:Long):String{
@@ -155,7 +148,6 @@ class HomeViewModel : ViewModel() {
             id = id,
             author = author,
             title = title,
-            selftext = selftext,
             timeStamp = timeStamp,
             media = media,
             commentsCount = commentsCount
