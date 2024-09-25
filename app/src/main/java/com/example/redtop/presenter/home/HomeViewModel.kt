@@ -64,6 +64,14 @@ class HomeViewModel : ViewModel() {
         })
     }
 
+    fun onItemView(publication: PublicationViewState) {
+        val viewItem = viewItems.value?.firstOrNull{
+            it.id == publication.id
+        }?: throw IllegalStateException()
+
+        actionStateMutable.value = ActionState.PublicationView(viewItem.id)
+    }
+
     private suspend fun addPublications(data: String){
         val jsonObject = JSONObject(data)
         val jsonArray: JSONArray = jsonObject.getJSONObject("data").getJSONArray("children")
@@ -141,6 +149,7 @@ class HomeViewModel : ViewModel() {
     sealed class ActionState{
         object None: ActionState()
         object ShowMessage: ActionState()
+        data class PublicationView(val publicationID: Int): ActionState()
     }
 
     private fun Publication.toViewState(): PublicationViewState{

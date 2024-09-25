@@ -8,7 +8,9 @@ import com.example.redtop.databinding.ItemPublicationBinding
 import com.example.redtop.presenter.base.PublicationViewState
 import com.squareup.picasso.Picasso
 
-class HomeViewItemAdapter :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>() {
+class HomeViewItemAdapter(
+    private val listener: OnItemSelectListener? = null
+) :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>() {
 
     //region Properties
 
@@ -28,7 +30,7 @@ class HomeViewItemAdapter :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: PublicationViewState = items[position]
-        holder.onBind(item)
+        holder.onBind(item, listener)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -44,8 +46,12 @@ class HomeViewItemAdapter :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>(
     class ViewHolder(
         private val binding: ItemPublicationBinding
     ) :RecyclerView.ViewHolder(binding.root) {
-        fun onBind(item: PublicationViewState) {
+        fun onBind(item: PublicationViewState, listener: OnItemSelectListener?) {
             with(binding) {
+                root.setOnClickListener {
+                    listener?.onClick(item)
+                }
+
                 authorTextView.text = item.author
                 titleTextView.text = item.title
                 timeStampTextView.text = "\u2022 ${item.timeStamp}"
@@ -53,6 +59,10 @@ class HomeViewItemAdapter :RecyclerView.Adapter<HomeViewItemAdapter.ViewHolder>(
                 commentsCountImageView.text = item.commentsCount
             }
         }
+    }
+
+    interface OnItemSelectListener{
+        fun onClick(publication: PublicationViewState)
     }
 
     //endregion
